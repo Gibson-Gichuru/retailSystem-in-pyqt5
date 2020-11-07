@@ -62,6 +62,7 @@ class products(base):
 	productDescription = Column(String(200))
 	productPrice = Column(Numeric(4,2), nullable = False)
 	productCategory = Column(Integer(), ForeignKey("Category.categoryId"))
+	prodcutQuantity = Column(Integer())
 
 	category = relationship("productCategory",backref = backref("Products",order_by = productCode))
 
