@@ -1,0 +1,20 @@
+styleSheet = """
+QFrame{
+	background-color:rgb(255,255,255);
+}
+QLineEdit{
+	background-color:rgb(255,255,255);
+}
+QPushButton#loginStatus:clicked{
+	background-color:rgb(255,255,255);
+}
+QTableView{
+	background-color:rgb(255,255,255);
+}
+QLabel#payoutLabel{
+	background-color:rgb(255,255,255);
+	color:rgb(255,0,0);
+}
+QPushButton#paymentButton{
+	background-color:rgb(0,255,0);
+}"""

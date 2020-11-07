@@ -1,0 +1,9 @@
+#Dont commit the following folders and flles
+designs/
+database/migrations/
+versions/
+__pycache__/
+*.ini
+*.mako
+env.py
+README
