@@ -14,7 +14,7 @@ class DataAccess:
 		product = data.session.query(products.productCode,
 			products.productName, products.productDescription,
 			products.productPrice, productCategory.categoryVat, 
-			productCategory.categotyDiscount)
+			productCategory.categoryDiscount)
 
 		product = product.join(productCategory)
 

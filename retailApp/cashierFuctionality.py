@@ -64,11 +64,21 @@ class cashierFunctions(CashierGui):
 
 		else:
 
-			cashierFunctions.productCart.prepareCart(product, qty)
+			cashierFunctions.productCart.prepareCart(product, qty, code)
+			self.populateProductViewFields(product)
+
+		#print(cashierFunctions.productCart)
 
 	def makePurchase(self):
 
 		pass
+
+	def populateProductViewFields(self, productObject):
+
+		self.currentProductName.setText(productObject.productName)
+		self.currentProductDescription.setText(productObject.productDescription)
+		self.currentProductPrice.setText(str(productObject.productPrice))
+		
 
 
 	def setUpTable(self):

@@ -50,19 +50,19 @@ class productCategory(base):
 	categoryId = Column(Integer(), primary_key = True)
 	categoryName = Column(String(40), nullable = False)
 	categoryVat = Column(Numeric(2,1), nullable = False, default = 0.0)
-	categotyDiscount = Column(Numeric(2,1), nullable = False, default = 0.0)
+	categoryDiscount = Column(Numeric(2,1), nullable = False, default = 0.0)
 
 
 class products(base):
 
 	__tablename__ = "Products"
 
-	productCode = Column(Integer(), primary_key = True)
+	productCode = Column(String(30), primary_key = True)
 	productName = Column(String(60), nullable = False)
 	productDescription = Column(String(200))
 	productPrice = Column(Numeric(4,2), nullable = False)
 	productCategory = Column(Integer(), ForeignKey("Category.categoryId"))
-	prodcutQuantity = Column(Integer())
+	productQuantity = Column(Integer())
 
 	category = relationship("productCategory",backref = backref("Products",order_by = productCode))
 

@@ -15,17 +15,17 @@ class Cart(list):
 
 		if len(self) > 0:
 
-			if keyValidator(productCode):
+			if self.keyValidator(productCode):
 
 				self.updateCart(Qty, productCode)
 
 			else:
 
-				self.registerProduct(productObject)
+				self.registerProduct(productObject, productCode, Qty)
 
 		else:
 			
-			self.registerProduct(productObject, productCode)
+			self.registerProduct(productObject, productCode, Qty)
 
 	def updateCart(self,Qty, productCode):
 
@@ -33,7 +33,11 @@ class Cart(list):
 
 			update = product.get(productCode)
 
-			# update the productQuantity and the total price
+			if update != None:
+
+				update[3] += update[2] * Qty
+
+				print(update[3])
 
 	def keyValidator(self, productcode):
 
@@ -41,22 +45,22 @@ class Cart(list):
 
 		for products in self:
 
-			key = products.keys()[0]
+			key = list(products.keys())[0]
 
 			keyHolder.append(key)
 
 		return productcode in keyHolder
 
-	def registerProduct(self, productObject, productCode):
+	def registerProduct(self, productObject, productCode, Qty):
 
 		productValues = {}
 
-		cost = calculateCost(productObject.categoryVat,
-			categotyDiscount,productPrice, Qty)
+		cost = self.calculateCost(productObject.categoryVat,
+			productObject.categoryDiscount,
+			productObject.productPrice, Qty)
 
-		productDetails = [productObject.productCode,
-		productObject.productName,productObject.productDescription,
-		cost[3], cost[4]]
+		productDetails = [productObject.productName,productObject.productDescription,
+		cost[2], cost[3]]
 
 		productValues.update({productCode: productDetails})
 
@@ -65,9 +69,9 @@ class Cart(list):
 
 	def calculateCost(self, vat, discount, QPrice, Qty):
 
-		ResultVat = round(vat * Qprice, 2)
+		ResultVat = round((vat/100) * QPrice, 2)
 
-		ResultDiscount = round(discount * QPrice, 2)
+		ResultDiscount = round((discount/100) * QPrice, 2)
 
 		unitPrice = (QPrice - ResultDiscount) + ResultVat
 
