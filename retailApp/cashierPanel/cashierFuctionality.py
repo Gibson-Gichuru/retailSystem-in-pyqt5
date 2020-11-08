@@ -1,10 +1,10 @@
-from cashierUi import CashierGui
+from .cashierUi import CashierGui
 
 from PyQt5.QtWidgets import (QHeaderView,QMessageBox)
 
 from PyQt5.QtGui import (QStandardItemModel, QStandardItem)
 
-from cart import Cart
+from .cart import Cart
 
 from dataAccess import DataAccess 
 

@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtWidgets import (QApplication, QMainWindow)
 
-from cashierFuctionality import cashierFunctions
+from cashierPanel.cashierFuctionality import cashierFunctions
 
 from styles import styleSheet
 
