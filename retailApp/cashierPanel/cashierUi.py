@@ -163,6 +163,7 @@ class CashierGui(QWidget):
 		self.cartTable.setFrameShape(QFrame.StyledPanel)
 		self.cartTable.setFrameShadow(QFrame.Plain)
 		self.cartTable.setEditTriggers(QAbstractItemView.NoEditTriggers)
+		self.cartTable.setSelectionBehavior(QAbstractItemView.SelectRows)
 		self.cartTable.setSelectionMode(QAbstractItemView.SingleSelection)
 		self.cartTable.verticalHeader().setVisible(False)
 
@@ -238,5 +239,3 @@ class CashierGui(QWidget):
 		self.setTabOrder(self.productCode, self.cashPayment)
 		self.setTabOrder(self.cashPayment, self.creditPayment)
 		self.setTabOrder(self.creditPayment, self.loginStatus)
-
-

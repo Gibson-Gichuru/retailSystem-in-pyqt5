@@ -1,6 +1,6 @@
 from .cashierUi import CashierGui
 
-from PyQt5.QtWidgets import (QHeaderView,QMessageBox)
+from PyQt5.QtWidgets import (QHeaderView,QMessageBox,QTableWidgetItem)
 
 from PyQt5.QtGui import (QStandardItemModel, QStandardItem)
 
@@ -65,19 +65,32 @@ class cashierFunctions(CashierGui):
 		else:
 
 			cashierFunctions.productCart.prepareCart(product, qty, code)
-			self.populateProductViewFields(product)
 
-		#print(cashierFunctions.productCart)
+			self.populateProductViewFields(product, qty)
+			self.updateTableView()
+
+
 
 	def makePurchase(self):
 
 		pass
 
-	def populateProductViewFields(self, productObject):
+	def populateProductViewFields(self, productObject, Qty):
 
 		self.currentProductName.setText(productObject.productName)
 		self.currentProductDescription.setText(productObject.productDescription)
 		self.currentProductPrice.setText(str(productObject.productPrice))
+
+		details = cashierFunctions.productCart.calculateCost(productObject.categoryVat,
+				productObject.categoryDiscount,
+				productObject.productPrice, Qty)
+
+		self.productVatView.setText(str(details[0]))
+		self.productDiscount.setText(str(details[1]))
+		self.productUnitPrice.setText(str(details[2]))
+		self.productTotalPrice.setText(str(details[3]))
+
+
 		
 
 
@@ -99,5 +112,50 @@ class cashierFunctions(CashierGui):
 		header.setSectionResizeMode(2, QHeaderView.Stretch)
 		header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
 		header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
+
+
+	def setUpTableView(self):
+
+		pass
+
+
+	def updateTableView(self):
+
+		productDetails = self.prepareProductDetails()
+
+		self.tableModel.setRowCount(len(productDetails))
+
+		for row in range(len(productDetails)):
+
+			for column in range(len(productDetails[row])):
+
+				item = QStandardItem(str(productDetails[row][column]))
+
+				self.tableModel.setItem(row, column, item)
+
+		pass
+
+	def prepareProductDetails(self):
+
+		#[{"productCode":[1,2,3,4,5,6]}]
+
+		details = []
+
+		for items in cashierFunctions.productCart:
+
+			for detail in items:
+
+				details.append(items.get(detail))
+
+
+		return details
+
+
+
+
+
+
+
+
 
 	

@@ -35,9 +35,8 @@ class Cart(list):
 
 			if update != None:
 
-				update[3] += update[2] * Qty
+				update[4] += update[3] * Qty
 
-				print(update[3])
 
 	def keyValidator(self, productcode):
 
@@ -59,7 +58,7 @@ class Cart(list):
 			productObject.categoryDiscount,
 			productObject.productPrice, Qty)
 
-		productDetails = [productObject.productName,productObject.productDescription,
+		productDetails = [productCode,productObject.productName,productObject.productDescription,
 		cost[2], cost[3]]
 
 		productValues.update({productCode: productDetails})
@@ -78,5 +77,7 @@ class Cart(list):
 		totalPrice = round(Qty * unitPrice, 2)
 
 		return [ResultVat, ResultDiscount, unitPrice, totalPrice]
+
+	
 
 
