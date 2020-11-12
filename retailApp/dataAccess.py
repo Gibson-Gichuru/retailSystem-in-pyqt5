@@ -13,7 +13,7 @@ class DataAccess:
 
 		product = data.session.query(products.productCode,
 			products.productName, products.productDescription,
-			products.productPrice, productCategory.categoryVat, 
+			products.productPrice, products.productQuantity,productCategory.categoryVat, 
 			productCategory.categoryDiscount)
 
 		product = product.join(productCategory)

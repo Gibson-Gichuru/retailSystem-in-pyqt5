@@ -7,6 +7,8 @@ from PyQt5.QtGui import QIcon,  QFont
 from PyQt5.QtCore import Qt,QSize
 
 from styles import styleSheet
+
+from utilities.appwidgets import cartTableView
 class CashierGui(QWidget):
 
 	def __init__(self):
@@ -159,13 +161,7 @@ class CashierGui(QWidget):
 
 		self.productEntryFrameLayout.addLayout(productEntryLayout)
 
-		self.cartTable = QTableView()
-		self.cartTable.setFrameShape(QFrame.StyledPanel)
-		self.cartTable.setFrameShadow(QFrame.Plain)
-		self.cartTable.setEditTriggers(QAbstractItemView.NoEditTriggers)
-		self.cartTable.setSelectionBehavior(QAbstractItemView.SelectRows)
-		self.cartTable.setSelectionMode(QAbstractItemView.SingleSelection)
-		self.cartTable.verticalHeader().setVisible(False)
+		self.cartTable = cartTableView()
 
 		self.productEntryFrameLayout.addWidget(self.cartTable)
 

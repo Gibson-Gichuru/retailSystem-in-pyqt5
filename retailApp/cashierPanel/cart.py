@@ -6,6 +6,8 @@ class Cart(list):
 
 		super().__init__()
 
+		self.productPurchased = []
+
 
 	def prepareCart(self, productObject, Qty, productCode):
 
@@ -22,10 +24,15 @@ class Cart(list):
 			else:
 
 				self.registerProduct(productObject, productCode, Qty)
+				self.prepareProductForPurchase(Qty, productCode)
 
 		else:
 			
 			self.registerProduct(productObject, productCode, Qty)
+			self.prepareProductForPurchase(Qty, productCode)
+
+
+		
 
 	def updateCart(self,Qty, productCode):
 
@@ -36,6 +43,8 @@ class Cart(list):
 			if update != None:
 
 				update[4] += update[3] * Qty
+
+		self.updateProductPurchased(productCode, Qty)
 
 
 	def keyValidator(self, productcode):
@@ -77,6 +86,48 @@ class Cart(list):
 		totalPrice = round(Qty * unitPrice, 2)
 
 		return [ResultVat, ResultDiscount, unitPrice, totalPrice]
+
+
+	def calculateTotal(self):
+
+		totals = 0
+
+		for products in self:
+
+			for details in products:
+
+				values = products.get(details)
+
+				totals += values[4]
+
+
+		return totals
+
+
+	def prepareProductForPurchase(self, Qty, productCode):
+
+		self.productPurchased.append({productCode:Qty})
+
+
+	def updateProductPurchased(self, productCode, Qty):
+
+		for products in self.productPurchased:
+
+			update = products.get(productCode)
+
+			if update != None:
+
+				products[productCode] += Qty
+
+
+
+		print(self.productPurchased)
+
+
+
+
+
+	
 
 	
 

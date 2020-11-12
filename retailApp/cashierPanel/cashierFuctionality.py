@@ -8,17 +8,21 @@ from .cart import Cart
 
 from dataAccess import DataAccess 
 
+from dialogs import addCreditorDialog
+
 accessData = DataAccess()
 
 class cashierFunctions(CashierGui):
 
-	productCart = Cart()
-
+	
 	def __init__(self):
 
 		super().__init__()
 
 		self.initiateFunctionality()
+
+		self.productCart = Cart()
+
 
 	def initiateFunctionality(self):
 
@@ -46,7 +50,7 @@ class cashierFunctions(CashierGui):
 
 		except ValueError:
 
-			QMessageBox.information(self,"InputError",
+			QMessageBox.warning(self,"InputError",
 				"Quantity Input Must Be a Whole Number")
 
 			self.productCode.clear()
@@ -59,21 +63,46 @@ class cashierFunctions(CashierGui):
 
 		if product == None:
 
-			QMessageBox.information(self,"Product Error",
+			QMessageBox.warning(self,"Product Error",
 				"Product Record Not Found")
 
 		else:
 
-			cashierFunctions.productCart.prepareCart(product, qty, code)
 
-			self.populateProductViewFields(product, qty)
-			self.updateTableView()
+			if product.productQuantity > qty:
 
+
+				self.productCart.prepareCart(product, qty, code)
+
+				self.populateProductViewFields(product, qty)
+				self.updateTableView()
+
+			else:
+
+				QMessageBox.warning(self, "Stock Error", 
+					"Out Of Stock", QMessageBox.Ok, QMessageBox.Ok)
 
 
 	def makePurchase(self):
 
-		pass
+		if len(self.productCart) == 0:
+
+			QMessageBox.warning(self, "Transaction Error", 
+				"The cart is empty", QMessageBox.Ok, QMessageBox.Ok)
+
+		else:
+
+			sender = self.sender()
+			paymentMethod = sender.text()
+			totals = self.productCart.calculateTotal()
+
+			if paymentMethod == "CashPayment":
+
+				pass
+
+			else:
+
+				pass
 
 	def populateProductViewFields(self, productObject, Qty):
 
@@ -81,7 +110,7 @@ class cashierFunctions(CashierGui):
 		self.currentProductDescription.setText(productObject.productDescription)
 		self.currentProductPrice.setText(str(productObject.productPrice))
 
-		details = cashierFunctions.productCart.calculateCost(productObject.categoryVat,
+		details = self.productCart.calculateCost(productObject.categoryVat,
 				productObject.categoryDiscount,
 				productObject.productPrice, Qty)
 
@@ -90,10 +119,8 @@ class cashierFunctions(CashierGui):
 		self.productUnitPrice.setText(str(details[2]))
 		self.productTotalPrice.setText(str(details[3]))
 
-
-		
-
-
+		self.totalPayoutLabel.setText(str(self.productCart.calculateTotal()))
+	
 	def setUpTable(self):
 
 		columns = ["Product Code","Product Name", "Product Description",
@@ -114,11 +141,6 @@ class cashierFunctions(CashierGui):
 		header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
 
 
-	def setUpTableView(self):
-
-		pass
-
-
 	def updateTableView(self):
 
 		productDetails = self.prepareProductDetails()
@@ -133,15 +155,12 @@ class cashierFunctions(CashierGui):
 
 				self.tableModel.setItem(row, column, item)
 
-		pass
 
 	def prepareProductDetails(self):
 
-		#[{"productCode":[1,2,3,4,5,6]}]
-
 		details = []
 
-		for items in cashierFunctions.productCart:
+		for items in self.productCart:
 
 			for detail in items:
 
@@ -151,11 +170,3 @@ class cashierFunctions(CashierGui):
 		return details
 
 
-
-
-
-
-
-
-
-	
