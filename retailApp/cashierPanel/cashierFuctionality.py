@@ -31,6 +31,8 @@ class cashierFunctions(CashierGui):
 
 		self.cashPayment.clicked.connect(self.makePurchase)
 		self.creditPayment.clicked.connect(self.makePurchase)
+		self.cartTable.removeProductAction.triggered.connect(self.removeProduct)
+		self.cartTable.clearCartAction.triggered.connect(self.clearCart)
 
 		self.setUpTable()
 
@@ -168,5 +170,46 @@ class cashierFunctions(CashierGui):
 
 
 		return details
+
+
+	def removeProduct(self):
+
+		productToRemove = index=(self.cartTable.selectionModel().currentIndex())
+
+		value = index.sibling(index.row(), 0).data()
+
+		self.tableModel.removeRow(index.row())
+		self.reFreshCart(value)
+		self.totalPayoutLabel.setText(str(self.productCart.calculateTotal()))
+
+	def clearCart(self):
+
+		self.productCart.clear()
+		self.productCart.productPurchased.clear()
+		self.updateTableView()
+		self.totalPayoutLabel.setText(str(self.productCart.calculateTotal()))
+
+
+	def reFreshCart(self, productCode):
+
+		for product in self.productCart:
+
+			key = list(product.keys())[0]
+
+			if key == productCode:
+
+				self.productCart.remove(product)
+
+
+		for productPurchased in self.productCart.productPurchased:
+
+			key = list(productPurchased.keys())[0]
+
+			if key == productCode:
+
+				self.productCart.productPurchased.remove(productPurchased)
+
+
+
 
 

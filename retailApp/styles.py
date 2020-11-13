@@ -3,10 +3,12 @@ QFrame{
 	background-color:rgb(255,255,255);
 }
 QLineEdit{
+	color:black;
 	background-color:rgb(255,255,255);
 }
-QPushButton#loginStatus:clicked{
+QPushButton#loginStatus:pressed{
 	background-color:rgb(255,255,255);
+	color:red;
 }
 QTableView{
 	background-color:rgb(255,255,255);

@@ -47,6 +47,7 @@ class CashierGui(QWidget):
 		windowHeaderLabel.setAlignment(Qt.AlignCenter)
 
 		self.loginStatus = QPushButton(" Gibson")
+		self.loginStatus.setObjectName("loginStatus")
 		self.loginStatus.setIcon(QIcon("../images/id-card.png"))
 		self.loginStatus.setFlat(True)
 		self.loginStatus.setStyleSheet("color:green")
