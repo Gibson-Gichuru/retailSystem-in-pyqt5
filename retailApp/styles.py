@@ -17,6 +17,9 @@ QLabel#payoutLabel{
 	background-color:rgb(255,255,255);
 	color:rgb(255,0,0);
 }
-QPushButton#paymentButton{
+QPushButton#CashPayment{
+	background-color:rgb(0,255,0);
+}
+QPushButton#CreditPayment{
 	background-color:rgb(0,255,0);
 }"""

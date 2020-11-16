@@ -1,3 +1,4 @@
+import datetime
 from .cashierUi import CashierGui
 
 from PyQt5.QtWidgets import (QHeaderView,QMessageBox,QTableWidgetItem)
@@ -95,13 +96,15 @@ class cashierFunctions(CashierGui):
 		else:
 
 			sender = self.sender()
-			paymentMethod = sender.text()
 			totals = self.productCart.calculateTotal()
 
-			if paymentMethod == "CashPayment":
+			date = datetime.date.today()
 
-				pass
-
+			if sender.objectName() == "CashPayment":
+				accessData.makePurchase(sender.objectName(), totals, date, 
+					self.productCart.productPurchased)
+				
+				self.clearCart()
 			else:
 
 				pass
@@ -208,8 +211,3 @@ class cashierFunctions(CashierGui):
 			if key == productCode:
 
 				self.productCart.productPurchased.remove(productPurchased)
-
-
-
-
-

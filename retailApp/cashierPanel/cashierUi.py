@@ -179,13 +179,13 @@ class CashierGui(QWidget):
 		payoutGroup.setLayout(groupLayout)
 
 		self.cashPayment = QPushButton(" CashPayment")
-		self.cashPayment.setObjectName("paymentButton")
+		self.cashPayment.setObjectName("CashPayment")
 		self.cashPayment.setFont(font)
 		self.cashPayment.setIcon(QIcon("../images/cash.png"))
 		self.cashPayment.setIconSize(QSize(30,30))
 
 		self.creditPayment = QPushButton(" CreditPayment")
-		self.creditPayment.setObjectName("paymentButton")
+		self.creditPayment.setObjectName("CreditPayment")
 		self.creditPayment.setFont(font)
 		self.creditPayment.setIcon(QIcon("../images/credit.png"))
 		self.creditPayment.setIconSize(QSize(30,30))

@@ -101,5 +101,3 @@ class Creditor(base):
 
 	recept = relationship("ReceptBook", backref = backref("Creditor", 
 		order_by = creditorId))
-
-

@@ -121,7 +121,8 @@ class Cart(list):
 
 
 
-		print(self.productPurchased)
+
+	
 
 
 

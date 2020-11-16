@@ -31,3 +31,48 @@ class DataAccess:
 			return None
 
 
+	def makePurchase(self, purchaseMethod, total, date, productDetails):
+
+		purchaseMode = self.getPurchaseMode(purchaseMethod)
+
+		if purchaseMode != None:
+
+			product = ReceptBook(purchaseAmount = total, dateOfPurchase = date)
+			product.payment = purchaseMode
+
+			self.databaseCommit(product)
+			self.updateProductRecords(productDetails)
+
+		else:
+			pass
+		
+
+	def getPurchaseMode(self, purchaseModeName):
+
+		purchaseMode = data.session.query(paymentMethod)
+
+		purchaseMode = purchaseMode.filter(paymentMethod.paymentMethodName == purchaseModeName)
+
+		purchaseMode = purchaseMode.first()
+
+		return purchaseMode
+
+	def databaseCommit(self, item):
+
+		data.session.add(item)
+		data.session.commit()
+
+	def updateProductRecords(self, productDetails):
+
+		for details in productDetails:
+
+			code = list(details.keys())[0]
+
+			productUpdate = data.session.query(products).filter(products.productCode == code)
+
+			productUpdate = productUpdate.first()
+
+			productUpdate.productQuantity -= details[code]
+
+			data.session.commit()
+
