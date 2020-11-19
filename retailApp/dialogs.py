@@ -118,6 +118,14 @@ class addCreditorDialog(QDialog):
 		mainDialogLayout.setStretch(1,4)
 		mainDialogLayout.setStretch(2,1)
 
+		self.setTabOrder(self.creditorPhonenumber, self.creditorIdNumber)
+		self.setTabOrder(self.creditorIdNumber, self.creditorFirstName)
+		self.setTabOrder(self.creditorFirstName, self.creditorsecondName)
+		self.setTabOrder(self.creditorsecondName, self.creditorAmountDue)
+		self.setTabOrder(self.creditorAmountDue, self.date)
+		self.setTabOrder(self.date, self.registerCreditorButton)
+
+
 	def registerCreditor(self):
 
 		id = self.creditorIdNumber.text()
