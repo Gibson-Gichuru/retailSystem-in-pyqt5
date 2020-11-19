@@ -43,6 +43,9 @@ class DataAccess:
 			self.databaseCommit(product)
 			self.updateProductRecords(productDetails)
 
+
+			return product
+
 		else:
 			pass
 		
@@ -75,4 +78,40 @@ class DataAccess:
 			productUpdate.productQuantity -= details[code]
 
 			data.session.commit()
+
+
+	def registerCredior(self, Id, firstname, secondName,amount,purchaseMethod,
+	 DOP, dueDate, productDetails):
+
+		receptId = self.makePurchase(purchaseMethod, amount, DOP, productDetails)
+
+		creditor = Creditor(creditorId = Id, creditorFirstName = firstname, 
+			creditorSecondName = secondName, dateDuePayment = dueDate)
+
+		creditor.recept = receptId
+
+		self.databaseCommit(creditor)
+
+	def checkCreditor(self, idNumber):
+
+		
+		creditor = data.session.query(Creditor)
+
+		creditor = creditor.filter(Creditor.creditorId == idNumber)
+
+		creditor = creditor.first()
+
+		if creditor == None:
+
+			return False
+
+		else:
+			
+			return True
+
+
+		
+
+
+
 

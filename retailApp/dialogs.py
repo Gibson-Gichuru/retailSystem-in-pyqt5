@@ -1,20 +1,34 @@
 from PyQt5.QtWidgets import (QDialog, QLineEdit, QPushButton, QVBoxLayout,
-	QHBoxLayout)
+	QHBoxLayout, QSpacerItem, QSizePolicy, QDateEdit, 
+	QMessageBox)
 
 
 from PyQt5.QtGui import QIcon,  QFont
 
-from PyQt5.QtCore import Qt,QSize
+from PyQt5.QtCore import Qt,QSize,QDate
+
+from dataAccess import DataAccess
+
+access = DataAccess()
 
 
 class addCreditorDialog(QDialog):
 
-	def __init__(self):
+	def __init__(self, parent, totals, DOP, paymentMethod, productDetails):
 
-		super().__init__()
+		super().__init__(parent)
+
+		self.setFixedSize(520, 320)
+		self.setWindowTitle("Creditor")
+		#self.setAttribute(Qt.WA_DeleteOnClose)
+		self.productTotals = totals
+		self.dateOfPurchase  = DOP
+
+		self.modeOfPayment = paymentMethod
+
+		self.details = productDetails
 
 		self.setUpGui()
-
 
 	def setUpGui(self):
 
@@ -28,9 +42,13 @@ class addCreditorDialog(QDialog):
 
 		headerIcon.setIcon(QIcon("../images/credit.png"))
 		headerIcon.setIconSize(QSize(60, 60))
+		headerIcon.setFlat(True)
 
 		#add header spacer item
+		headerSpace = QSpacerItem(40, 20,QSizePolicy.Expanding, QSizePolicy.Minimum)
+		headerlayout.addItem(headerSpace)
 		headerlayout.addWidget(headerIcon)
+		headerlayout.addItem(headerSpace)
 		# add header spacer item
 
 		mainDialogLayout.addLayout(headerlayout)
@@ -49,28 +67,38 @@ class addCreditorDialog(QDialog):
 		outerInputLayout.addLayout(inputLayout2)
 
 		self.creditorPhonenumber = QLineEdit()
-		self.creditorPhonenumber.setAlignment(Qt.alignCenter)
+		self.creditorPhonenumber.setAlignment(Qt.AlignCenter)
+		self.creditorPhonenumber.setPlaceholderText("Phone number")
 
 		self.creditorIdNumber = QLineEdit()
-		self.creditorIdNumber.setAlignment(Qt.alignCenter)
+		self.creditorIdNumber.setAlignment(Qt.AlignCenter)
+		self.creditorIdNumber.setPlaceholderText("Id Number")
 
 		self.creditorFirstName = QLineEdit()
-		self.creditorFirstName.setAlignment(Qt.alignCenter)
+		self.creditorFirstName.setAlignment(Qt.AlignCenter)
+		self.creditorFirstName.setPlaceholderText("First Name")
 
 		self.creditorsecondName = QLineEdit()
-		self.creditorsecondName.setAlignment(Qt.alignCenter)
+		self.creditorsecondName.setAlignment(Qt.AlignCenter)
+		self.creditorsecondName.setPlaceholderText("Second Name")
 
 		self.creditorAmountDue = QLineEdit()
-		self.creditorAmountDue.setAlignment(Qt.alignCenter)
+		self.creditorAmountDue.setAlignment(Qt.AlignCenter)
+		self.creditorAmountDue.setPlaceholderText("Due Amount")
+		self.creditorAmountDue.setEnabled(False)
+		self.creditorAmountDue.setText(str(self.productTotals))
+
+		self.date = QDateEdit()
+		self.date.setDate(QDate.currentDate())
 
 		inputLayout1.addWidget(self.creditorPhonenumber)
 		inputLayout2.addWidget(self.creditorIdNumber)
 		inputLayout1.addWidget(self.creditorFirstName)
 		inputLayout2.addWidget(self.creditorsecondName)
 		inputLayout1.addWidget(self.creditorAmountDue)
-
+	
 		#datewidget item
-		inputLayout2.addWidget(self.creditorPhonenumber)
+		inputLayout2.addWidget(self.date)
 
 		mainDialogLayout.addLayout(outerInputLayout)
 
@@ -78,7 +106,7 @@ class addCreditorDialog(QDialog):
 		buttonLayout.setContentsMargins(20,0,20,0)
 
 		self.registerCreditorButton = QPushButton("registerCreditor")
-		self.registerCreditorButton.setObjcetName("registerCreditorButton")
+		self.registerCreditorButton.setObjectName("registerCreditorButton")
 
 		self.registerCreditorButton.clicked.connect(self.registerCreditor)
 
@@ -92,9 +120,54 @@ class addCreditorDialog(QDialog):
 
 	def registerCreditor(self):
 
-		pass
+		id = self.creditorIdNumber.text()
+		fname = self.creditorFirstName.text()
+		sname = self.creditorsecondName.text()
+
+		dueDate = self.date.date().toPyDate()
+
+
+		# check if the creditor exists 
+
+		creditor = access.checkCreditor(self.creditorIdNumber.text())
+
+		if creditor == True:
+
+			QMessageBox.information(self, "Record Found", 
+				"Creditor with the given Id Number exists",QMessageBox.Ok,
+				QMessageBox.Ok)
+
+		else:
+
+			access.registerCredior(id, fname, sname, 
+				self.productTotals, self.modeOfPayment,self.dateOfPurchase, 
+				dueDate,self.details);
+
+			self.accept()
+		# if the exist the prompt the user to use other alternative ways
+		#else register the creditor
+
+	
+
+	def closeEvent(self, event):
+
+		answer = QMessageBox.question(self, "Quit", 
+			"Are you sure you dont want to proceed", QMessageBox.Ok | QMessageBox.Cancel,
+			QMessageBox.Ok)
+
+		if answer == QMessageBox.Ok:
+
+			event.accept()
+
+		else:
+			
+			event.ignore()
+		
+
 
 
 class userProductRegBluePrint:
 
 	pass
+
+

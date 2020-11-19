@@ -5,11 +5,14 @@ from PyQt5.QtWidgets import (QHeaderView,QMessageBox,QTableWidgetItem)
 
 from PyQt5.QtGui import (QStandardItemModel, QStandardItem)
 
+from PyQt5.QtCore import Qt
+
 from .cart import Cart
 
 from dataAccess import DataAccess 
 
 from dialogs import addCreditorDialog
+
 
 accessData = DataAccess()
 
@@ -107,7 +110,11 @@ class cashierFunctions(CashierGui):
 				self.clearCart()
 			else:
 
-				pass
+				self.creditor = addCreditorDialog(self,
+					totals, date, "CreditPayment", self.productCart.productPurchased)
+				if self.creditor.exec():
+
+					self.clearCart()
 
 	def populateProductViewFields(self, productObject, Qty):
 

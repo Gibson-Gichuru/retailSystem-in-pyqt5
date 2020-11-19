@@ -22,4 +22,7 @@ QPushButton#CashPayment{
 }
 QPushButton#CreditPayment{
 	background-color:rgb(0,255,0);
+}
+QPushButton#registerCreditorButton{
+	background-color:rgb(0,255,0);
 }"""
