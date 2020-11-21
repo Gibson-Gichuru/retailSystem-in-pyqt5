@@ -20,7 +20,6 @@ class addCreditorDialog(QDialog):
 
 		self.setFixedSize(520, 320)
 		self.setWindowTitle("Creditor")
-		#self.setAttribute(Qt.WA_DeleteOnClose)
 		self.productTotals = totals
 		self.dateOfPurchase  = DOP
 
@@ -154,22 +153,6 @@ class addCreditorDialog(QDialog):
 			self.accept()
 		# if the exist the prompt the user to use other alternative ways
 		#else register the creditor
-
-	
-
-	def closeEvent(self, event):
-
-		answer = QMessageBox.question(self, "Quit", 
-			"Are you sure you dont want to proceed", QMessageBox.Ok | QMessageBox.Cancel,
-			QMessageBox.Ok)
-
-		if answer == QMessageBox.Ok:
-
-			event.accept()
-
-		else:
-			
-			event.ignore()
 		
 
 

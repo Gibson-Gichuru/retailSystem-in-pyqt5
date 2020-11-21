@@ -112,7 +112,7 @@ class cashierFunctions(CashierGui):
 
 				self.creditor = addCreditorDialog(self,
 					totals, date, "CreditPayment", self.productCart.productPurchased)
-				if self.creditor.exec():
+				if self.creditor.exec_():
 
 					self.clearCart()
 

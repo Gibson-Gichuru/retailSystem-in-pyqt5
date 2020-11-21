@@ -1,7 +1,5 @@
 import sys
 
-import faulthandler; faulthandler.enable()
-
 from PyQt5.QtWidgets import (QApplication, QMainWindow)
 
 from cashierPanel.cashierFuctionality import cashierFunctions
