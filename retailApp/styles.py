@@ -25,4 +25,7 @@ QPushButton#CreditPayment{
 }
 QPushButton#registerCreditorButton{
 	background-color:rgb(0,255,0);
+}
+QPushButton#optionButton{
+	background-color:rgb(0,255,0);
 }"""
