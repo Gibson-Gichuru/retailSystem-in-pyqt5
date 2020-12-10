@@ -118,18 +118,3 @@ class Cart(list):
 			if update != None:
 
 				products[productCode] += Qty
-
-
-
-
-	
-
-
-
-
-
-	
-
-	
-
-

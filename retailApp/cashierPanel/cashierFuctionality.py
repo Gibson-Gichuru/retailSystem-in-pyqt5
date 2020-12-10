@@ -7,25 +7,21 @@ from PyQt5.QtGui import (QStandardItemModel, QStandardItem)
 
 from PyQt5.QtCore import Qt
 
-from .cart import Cart
+from cashierPanel import cart
 
-from dataAccess import DataAccess 
-
-from dialogs import addCreditorDialog
-
-
-accessData = DataAccess()
+from utilities import accessDatabase,creditorDialog
 
 class cashierFunctions(CashierGui):
 
 	
-	def __init__(self):
-
+	def __init__(self, parent):
 		super().__init__()
 
 		self.initiateFunctionality()
 
-		self.productCart = Cart()
+		self.parent = parent
+
+		self.productCart = cart()
 
 
 	def initiateFunctionality(self):
@@ -65,7 +61,7 @@ class cashierFunctions(CashierGui):
 
 	def validateProduct(self, code ,qty):
 
-		product = accessData.getProduct(code)
+		product = accessDatabase.getProduct(code)
 
 		if product == None:
 
@@ -110,11 +106,16 @@ class cashierFunctions(CashierGui):
 				self.clearCart()
 			else:
 
-				self.creditor = addCreditorDialog(self,
+				self.creditor = addCreditorDialog(self.parent,
 					totals, date, "CreditPayment", self.productCart.productPurchased)
 				if self.creditor.exec_():
 
 					self.clearCart()
+
+
+	def creditPurchase(self):
+
+		pass
 
 	def populateProductViewFields(self, productObject, Qty):
 

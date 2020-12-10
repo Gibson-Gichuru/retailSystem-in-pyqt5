@@ -4,11 +4,12 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow)
 
 from cashierPanel.cashierFuctionality import cashierFunctions
 
-from adminPanel.adminPanel import adminPanelUi
+from adminPanel import adminUserInterFace
 
 from PyQt5.QtGui import QIcon
 
-from styles import styleSheet
+from utilities import style
+
 
 
 class MainWindow(QMainWindow):
@@ -26,14 +27,16 @@ class MainWindow(QMainWindow):
 
 		self.showMaximized()
 
-		self.setCentralWidget(adminPanelUi())
+		self.setCentralWidget(cashierFunctions)
 
-	
+
+	def cashierPayout(self):
+
+		pass
 
 
 if __name__  == "__main__":
-
 	app = QApplication(sys.argv)
 	window = MainWindow()
-	app.setStyleSheet(styleSheet)
+	app.setStyleSheet(style)
 	sys.exit(app.exec_())

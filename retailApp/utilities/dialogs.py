@@ -1,15 +1,13 @@
 from PyQt5.QtWidgets import (QDialog, QLineEdit, QPushButton, QVBoxLayout,
 	QHBoxLayout, QSpacerItem, QSizePolicy, QDateEdit, 
-	QMessageBox)
+	QMessageBox,QComboBox)
 
 
 from PyQt5.QtGui import QIcon,  QFont
 
 from PyQt5.QtCore import Qt,QSize,QDate
 
-from dataAccess import DataAccess
-
-access = DataAccess()
+#access = accessDatabase
 
 
 class addCreditorDialog(QDialog):
@@ -157,8 +155,131 @@ class addCreditorDialog(QDialog):
 
 
 
-class userProductRegBluePrint:
+class userAddEditBluePrint(QDialog):
+
+	def __init__(self, parent):
+
+		super().__init__()
+
+		self.setFixedSize(475, 240)
+		self.initiateUi()
+		self.updateUseRole()
+
+	def initiateUi(self):
+
+		mainDialogLayout = QVBoxLayout()
+
+		self.setLayout(mainDialogLayout)
+
+		headerlayout = QHBoxLayout()
+
+		headerSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+		headerIcon = QPushButton()
+		headerIcon.setFlat(True)
+		headerIcon.setIcon(QIcon("../images/add-user.png"))
+		headerIcon.setIconSize(QSize(40, 40))
+
+		headerlayout.addItem(headerSpacer)
+		headerlayout.addWidget(headerIcon)
+		headerlayout.addItem(headerSpacer)
+
+		mainDialogLayout.addLayout(headerlayout)
+
+		mainInputLayout = QVBoxLayout()
+
+		emailFiledLayout = QHBoxLayout()
+		self.userEmail = QLineEdit()
+		self.userEmail.setAlignment(Qt.AlignCenter)
+		self.userEmail.setPlaceholderText("Email Address")
+
+		emailFiledLayout.addWidget(self.userEmail)
+
+		mainInputLayout.addLayout(emailFiledLayout)
+
+		inputLayout1 = QHBoxLayout()
+
+		self.userName = QLineEdit()
+		self.userName.setAlignment(Qt.AlignCenter)
+		self.userName.setPlaceholderText("Username")
+
+		self.userIdNumber = QLineEdit()
+		self.userIdNumber.setAlignment(Qt.AlignCenter)
+		self.userIdNumber.setPlaceholderText("Id Number")
+
+		inputLayout1.addWidget(self.userName)
+		inputLayout1.addWidget(self.userIdNumber)
+
+		inputLayout2 = QHBoxLayout()
+
+		self.userPhoneNumber = QLineEdit()
+		self.userPhoneNumber.setAlignment(Qt.AlignCenter)
+		self.userPhoneNumber.setPlaceholderText("Phone Number")
+
+		self.userRole = QComboBox()
+
+		inputLayout2.addWidget(self.userPhoneNumber)
+		inputLayout2.addWidget(self.userRole)
+
+		inputLayout2.setStretch(0,1)
+		inputLayout2.setStretch(1,1)
+
+		mainInputLayout.addLayout(inputLayout1)
+		mainInputLayout.addLayout(inputLayout2)
+
+		registerButtonLayout = QHBoxLayout()
+
+		self.registerUserButton = QPushButton("Register User")
+
+		registerButtonLayout.addWidget(self.registerUserButton)
+
+		mainInputLayout.addLayout(registerButtonLayout)
+
+		mainDialogLayout.addLayout(mainInputLayout)
+
+		mainDialogLayout.setStretch(0,1)
+		mainDialogLayout.setStretch(1,3)
+
+
+
+	def updateUseRole(self):
+
+		role = access.getUserRole()
+
+		for items in role:
+
+			self.userRole.addItem(items)
+
+
+class addUser(userAddEditBluePrint):
+
+	def __init__(self, parent):
+
+		super().__init__(parent)
+
+		self.registerFunctionality()
+		self.setWindowTitle("Register New Users")
+
+	def registerFunctionality(self):
+
+		self.registerUserButton.clicked.connect(self.registerNewUser)
+
+	def registerNewUser(self):
+
+		user = access.getUser(self.userIdNumber())
+
+		if user:
+
+			access.registerUser()
+
+		else:
+			
+			QMessageBox.information(self, "User Exists", 
+				"user under the given id is registered",
+				QMessageBox.Ok, QMessageBox.Ok)
+		
+
+class addProduct(QDialog):
 
 	pass
-
 

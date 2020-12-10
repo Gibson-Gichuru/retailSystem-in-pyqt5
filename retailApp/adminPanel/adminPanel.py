@@ -6,7 +6,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QFont
 
 from PyQt5.QtCore import Qt, QSize
 
-from .tabWidgets import userTab, stockTab, cashFlowTab
+from adminPanel import userEditTab, stockEditTab,cashEditTab
 
 
 class adminPanelUi(QWidget):
@@ -90,7 +90,7 @@ class adminPanelUi(QWidget):
 
 	def bodyTabSetUp(self):
 
-		self.user_tab = userTab()
+		self.user_tab = userEditTab
 
 		userIcon = QIcon()
 
@@ -100,7 +100,7 @@ class adminPanelUi(QWidget):
 		self.bodyTab.addTab(self.user_tab, userIcon, "User Management")
 
 
-		self.stock_tab = stockTab()
+		self.stock_tab = stockEditTab
 
 		stockIcon = QIcon()
 
@@ -110,7 +110,7 @@ class adminPanelUi(QWidget):
 		self.bodyTab.addTab(self.stock_tab, stockIcon, "Stock Management")
 
 
-		self.cash_tab = cashFlowTab()
+		self.cash_tab = cashEditTab
 
 		cashIcon = QIcon()
 

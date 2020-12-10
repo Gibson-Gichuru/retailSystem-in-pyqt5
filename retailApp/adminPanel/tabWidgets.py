@@ -6,9 +6,8 @@ from PyQt5.QtGui import (QIcon, QFont, QStandardItemModel, QStandardItem)
 
 from PyQt5.QtCore import Qt, QSize
 
-from utilities.appwidgets  import userTableView, StockTableView
-
-from dataAccess import DataAccess
+from utilities import (registeredUserTable, stockTable, accessDatabase,
+	addUser, ph)
 
 
 class tabBluePrint(QWidget):
@@ -123,6 +122,7 @@ class userTab(tabBluePrint):
 		self.addButton.setText("New user")
 		self.addButton.setIcon(QIcon("../images/database.png"))
 		self.addButton.setIconSize(QSize(40,40))
+		self.addButton.clicked.connect(self.addNewUser)
 
 		self.editButton.setText("Edit User")
 		self.editButton.setIcon(QIcon("../images/edit.png"))
@@ -132,7 +132,7 @@ class userTab(tabBluePrint):
 		self.deleteButton.setIcon(QIcon("../images/delete.png"))
 		self.deleteButton.setIconSize(QSize(40,40))
 
-		self.userTable = userTableView()
+		self.userTable = registeredUserTable
 
 		self.tableViewLayout.addWidget(self.userTable)
 
@@ -160,7 +160,13 @@ class userTab(tabBluePrint):
 
 	def updateTableView(self):
 
+		pass
 
+	def addNewUser(self):
+
+		self.userDialog = addUser(self)
+
+		self.userDialog.exec_()
 
 
 class stockTab(tabBluePrint):
@@ -171,6 +177,7 @@ class stockTab(tabBluePrint):
 
 		self.setUpStockTab()
 		self.setupTableView()
+		self.updateProductTableView()
 
 
 	def setUpStockTab(self):
@@ -180,6 +187,7 @@ class stockTab(tabBluePrint):
 		self.addButton.setText("New Product")
 		self.addButton.setIcon(QIcon("../images/database.png"))
 		self.addButton.setIconSize(QSize(40,40))
+		self.addButton.clicked.connect(self.addStock)
 
 		self.editButton.setText("Edit Stock")
 		self.editButton.setIcon(QIcon("../images/edit.png"))
@@ -189,7 +197,7 @@ class stockTab(tabBluePrint):
 		self.deleteButton.setIcon(QIcon("../images/delete.png"))
 		self.deleteButton.setIconSize(QSize(40,40))
 
-		self.stockTable = StockTableView()
+		self.stockTable = stockTable
 
 		self.tableViewLayout.addWidget(self.stockTable)
 
@@ -200,24 +208,59 @@ class stockTab(tabBluePrint):
 		self.stockTable.setModel(self.stockTableModel)
 
 		columns = ["Product Code", "Product Name", 
-		"Product Description", "Price", "Category", "Quantity", 
-		"Vat", "Discount"]
+		"Product Description", "Price", "Category", "Quantity"]
 
 		self.stockTableModel.setHorizontalHeaderLabels(columns)
 
 		header = self.stockTable.horizontalHeader()
 
 		header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
-		header.setSectionResizeMode(1, QHeaderView.Stretch)
+		header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
 		header.setSectionResizeMode(2, QHeaderView.Stretch)
 		header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
 		header.setSectionResizeMode(4, QHeaderView.Stretch)
-		header.setSectionResizeMode(5, QHeaderView.Stretch)
-		header.setSectionResizeMode(6, QHeaderView.ResizeToContents)
-		header.setSectionResizeMode(7, QHeaderView.ResizeToContents)
-
-
+		header.setSectionResizeMode(5, QHeaderView.ResizeToContents)
 		
+
+
+	def prepareProductForView(self):
+
+		products = accessDatabase.getProducts()
+
+		productsAvailable = []
+
+		for items in products:
+
+			details = [items.productCode, items.productName,
+			items.productDescription, items.productPrice, items.productCategory,
+			items.productQuantity]
+
+			productsAvailable.append(details)
+
+
+
+		return productsAvailable
+
+
+	def updateProductTableView(self):
+
+		products = self.prepareProductForView()
+
+		self.stockTableModel.setRowCount(len(products))
+
+		for row in range(len(products)):
+
+			for columns in range(len(products[row])):
+
+				item = QStandardItem(str(products[row][columns]))
+
+				self.stockTableModel.setItem(row, columns, item)
+
+
+	def addStock(self):
+
+		pass
+
 
 
 class cashFlowTab(QWidget):

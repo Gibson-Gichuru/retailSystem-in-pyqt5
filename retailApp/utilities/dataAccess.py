@@ -1,6 +1,6 @@
 # Data Manupulation module
 
-from database.Models.models import (data, Users, userRole, productCategory,
+from database import (data, Users, userRole, productCategory,
 	products,paymentMethod, ReceptBook, Creditor)
 
 
@@ -110,11 +110,41 @@ class DataAccess:
 			return True
 
 
-	
+	def getProducts(self):
+
+		item = data.session.query(products)
+
+		item = item.all()
+
+		return item
+
+	def getUserRole(self):
+
+		userRoles = data.session.query(userRole.roleName)
+
+		userRoles = userRoles.all()
+
+		return [role for role in userRoles]
 
 
+	def getUser(self, givenUserID):
+
+		registeredUser = data.session.query(Users)
+		registeredUser = registeredUser.filter(Users.userIdNumber == givenUserID)
+
+		registeredUser = registeredUser.first()
+
+		if registeredUser == None:
+
+			return False
+
+		else:
+			
+			return True
+
+
+	def registerUser(self):
 		
-
-
-
+		pass
+		
 

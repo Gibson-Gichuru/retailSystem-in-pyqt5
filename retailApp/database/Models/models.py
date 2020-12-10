@@ -4,6 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import sessionmaker, relationship, backref
 
+from sqlalchemy.inspection import inspect
+
 base = declarative_base()
 
 engine = create_engine(
@@ -16,6 +18,13 @@ class DatabaseAccess:
 		self.Session = sessionmaker(bind = engine)
 
 		self.session = self.Session()
+
+
+	def getPrimaryKey(self, tableName):
+
+		return inspect(tableName).primary_key[0].name
+
+
 
 data = DatabaseAccess()
 
@@ -32,7 +41,8 @@ class Users(base):
 
 	__tablename__ = "users"
 
-	username = Column(String(50), primary_key = True)
+	userIdNumber = Column(String(50), primary_key = True)
+	username = Column(String(50), nullable = False)
 	usernameEmail = Column(String(200), nullable = False)
 	usernamePhoneNumber = Column(String(40), nullable = False)
 	usernamePassSalt = Column(String(30), nullable = False)
