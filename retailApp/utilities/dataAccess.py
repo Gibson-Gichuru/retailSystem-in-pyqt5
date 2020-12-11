@@ -1,6 +1,6 @@
 # Data Manupulation module
 
-from database import (data, Users, userRole, productCategory,
+from database.Models.models import (data, Users, userRole, productCategory,
 	products,paymentMethod, ReceptBook, Creditor)
 
 

@@ -9,7 +9,8 @@ from PyQt5.QtCore import Qt
 
 from cashierPanel import cart
 
-from utilities import accessDatabase,creditorDialog
+from utilities import accessDatabase
+
 
 class cashierFunctions(CashierGui):
 
@@ -21,7 +22,7 @@ class cashierFunctions(CashierGui):
 
 		self.parent = parent
 
-		self.productCart = cart()
+		self.productCart = cart
 
 
 	def initiateFunctionality(self):
@@ -100,7 +101,7 @@ class cashierFunctions(CashierGui):
 			date = datetime.date.today()
 
 			if sender.objectName() == "CashPayment":
-				accessData.makePurchase(sender.objectName(), totals, date, 
+				accessDatabase.makePurchase(sender.objectName(), totals, date, 
 					self.productCart.productPurchased)
 				
 				self.clearCart()

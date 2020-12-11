@@ -7,7 +7,7 @@ from PyQt5.QtGui import QIcon,  QFont
 from PyQt5.QtCore import Qt,QSize
 
 
-from utilities.appwidgets import cartTableView, styles
+from utilities.appWidgets import cartTableView
 class CashierGui(QWidget):
 
 	def __init__(self):

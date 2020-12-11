@@ -6,8 +6,9 @@ from PyQt5.QtGui import (QIcon, QFont, QStandardItemModel, QStandardItem)
 
 from PyQt5.QtCore import Qt, QSize
 
-from utilities import (registeredUserTable, stockTable, accessDatabase,
-	addUser, ph)
+from utilities import  ph
+
+from utilities.appWidgets import (userTableView, StockTableView)
 
 
 class tabBluePrint(QWidget):
@@ -132,7 +133,7 @@ class userTab(tabBluePrint):
 		self.deleteButton.setIcon(QIcon("../images/delete.png"))
 		self.deleteButton.setIconSize(QSize(40,40))
 
-		self.userTable = registeredUserTable
+		self.userTable = userTableView
 
 		self.tableViewLayout.addWidget(self.userTable)
 
@@ -197,7 +198,7 @@ class stockTab(tabBluePrint):
 		self.deleteButton.setIcon(QIcon("../images/delete.png"))
 		self.deleteButton.setIconSize(QSize(40,40))
 
-		self.stockTable = stockTable
+		self.stockTable = StockTableView
 
 		self.tableViewLayout.addWidget(self.stockTable)
 

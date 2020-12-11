@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow)
 
 from cashierPanel.cashierFuctionality import cashierFunctions
 
-from adminPanel import adminUserInterFace
+from adminPanel.adminPanel import adminPanelUi
 
 from PyQt5.QtGui import QIcon
 
@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
 
 		self.showMaximized()
 
-		self.setCentralWidget(cashierFunctions)
+		self.setCentralWidget(cashierFunctions(self))
 
 
 	def cashierPayout(self):

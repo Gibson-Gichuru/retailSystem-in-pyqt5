@@ -1,18 +1,10 @@
-from .appwidgets import cartTableView, userTableView,StockTableView
-from .dataAccess import DataAccess
 
-from .dialogs import addCreditorDialog, addUser, addProduct
+from .dataAccess import DataAccess
 from .passwordHelper import passwordHasher
 from .styles import styleSheet
 
 accessDatabase = DataAccess()
 
-purchasedProductsTable = cartTableView()
-registeredUserTable = userTableView()
-stockTable = StockTableView()
-
-ph = passwordHelper()
+ph = passwordHasher()
 
 style = styleSheet
-
-creditorDialog = addCreditorDialog
