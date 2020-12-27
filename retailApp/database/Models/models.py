@@ -1,5 +1,5 @@
 from sqlalchemy import (Table, Column , Integer, 
-	String, create_engine, ForeignKey, Numeric, Date)
+	String, create_engine, ForeignKey, Numeric, Date, inspect)
 from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import sessionmaker, relationship, backref
@@ -23,6 +23,15 @@ class DatabaseAccess:
 	def getPrimaryKey(self, tableName):
 
 		return inspect(tableName).primary_key[0].name
+
+
+	def inspectDatabase(recordObject):
+
+		recordCommit = inspect(recordObject)
+
+		return recor
+
+
 
 
 

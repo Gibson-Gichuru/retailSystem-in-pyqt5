@@ -7,7 +7,9 @@ from PyQt5.QtGui import QIcon,  QFont
 
 from PyQt5.QtCore import Qt,QSize,QDate
 
-#access = accessDatabase
+from utilities.dataAccess import DataAccess
+
+access = DataAccess()
 
 
 class addCreditorDialog(QDialog):
@@ -148,7 +150,7 @@ class addCreditorDialog(QDialog):
 				self.productTotals, self.modeOfPayment,self.dateOfPurchase, 
 				dueDate,self.details);
 
-			self.accept()
+		
 		# if the exist the prompt the user to use other alternative ways
 		#else register the creditor
 		

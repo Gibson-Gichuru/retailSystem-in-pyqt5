@@ -11,16 +11,18 @@ from cashierPanel import cart
 
 from utilities import accessDatabase
 
+from utilities.dialogs import addCreditorDialog
+
 
 class cashierFunctions(CashierGui):
 
 	
-	def __init__(self, parent):
+	def __init__(self):
 		super().__init__()
 
 		self.initiateFunctionality()
 
-		self.parent = parent
+		#self.parent = parent
 
 		self.productCart = cart
 
@@ -114,9 +116,17 @@ class cashierFunctions(CashierGui):
 					self.clearCart()
 
 
-	def creditPurchase(self):
+	def creditPurchase(self, dialogParent):
 
-		pass
+		date = datetime.date.today()
+		totals = self.productCart.calculateTotal()
+
+		self.creditor = addCreditorDialog(dialogParent,totals, date, "CreditPayment", self.productCart.productPurchased)
+
+		self.creditor.exec()
+
+
+		
 
 	def populateProductViewFields(self, productObject, Qty):
 
